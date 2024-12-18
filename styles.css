@@ -1,0 +1,14 @@
+body {
+    background-color: pink;
+}
+div {
+    width: 10px;
+    height: 30px;
+    position: absolute;
+    left: 300 px;
+}
+
+p {
+    position: absolute;
+
+}
