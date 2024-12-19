@@ -1,10 +1,10 @@
 var fly=document.getElementById("fly");
 var cubic=document.getElementById("cube");
-var postext=document.getElementById("pos")
+var postext=document.getElementById("counter")
 cubic.style.left = 300 + "px";
 cubic.style.top = 300 + "px";
+//cubic.style.backgroundColor = "violet";
 
-postext.style.bottom = 50 +"px";
 var time =200
 var posionmouseX,posionmouseY
 
@@ -52,6 +52,35 @@ function moveYback(b){
     },time)
 }
 
+var collective=document.getElementById("collective")
+var X_fly, Y_fly, X_collective, Y_collective
+
+window.onload=function(){
+    collective.style.left = Math.random()*window.innerWidth +"px"
+    collective.style.top = Math.random()*window.innerHeight +"px"
+
+    X_fly = cubic.offsetLeft;
+    Y_fly = cubic.offsetTop;
+    X_collective = collective.offsetLeft 
+    Y_collective = collective.offsetTop 
+}
+
+var counter = 0
+var timercol = setInterval(function() {
+    X_fly = cubic.offsetLeft;
+    Y_fly = cubic.offsetTop;
+    X_collective = collective.offsetLeft 
+    Y_collective = collective.offsetTop 
+    if (Math.abs(X_fly-X_collective)<50 && Math.abs(Y_fly-Y_collective)<50) {
+       collective.style.left = Math.random()*window.innerWidth +"px"
+       collective.style.top = Math.random()*window.innerHeight +"px"
+       counter+=1
+       postext.innerHTML = "Eaten: " + counter
+   }
+   },500)
+
+
+
 document.onmousedown = function(event) {
     posionmouseX=event.clientX
     posionmouseY=event.clientY
@@ -62,7 +91,7 @@ document.onmousedown = function(event) {
     distX = posionmouseX-currentpositionX
     distY = posionmouseY-currentpositionY
     alpha = Math.atan(Math.abs(distY/distX)) * 57.3
-    postext.innerHTML = currentpositionX + " " +currentpositionY
+   // postext.innerHTML = currentpositionX + "  " +currentpositionY
 
 
     if (distX>0) {
@@ -91,8 +120,10 @@ document.onmousedown = function(event) {
             fly.style.transform = `rotate(${270+alpha}deg)`;
         }
     }
+    
     clearInterval(timermovebX)
     clearInterval(timermoveX)
     clearInterval(timermovebY)
     clearInterval(timermoveY)
+    
 }
