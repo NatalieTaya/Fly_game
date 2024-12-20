@@ -1,32 +1,33 @@
-var fly=document.getElementById("fly");
-var cubic=document.getElementById("cube");
-var postext=document.getElementById("counter")
+let fly=document.getElementById("fly");
+let cubic=document.getElementById("cube");
+let postext=document.getElementById("counter")
+let msg=document.getElementById("msg")
+
 cubic.style.left = 300 + "px";
 cubic.style.top = 300 + "px";
-//cubic.style.backgroundColor = "violet";
 
-var time =200
-var posionmouseX,posionmouseY
-
-var currentpositionX
-var currentpositionY
-var alpha
-var distX, distY;
+let time =100
+let posionmouseX,posionmouseY
+let flystep=20
+let currentpositionX
+let currentpositionY
+let alpha
+let distX, distY;
 
 // move X
 function moveX(a){
-    var timermoveX = setInterval(function() {
-    if (posionmouseX>=currentpositionX && a < posionmouseX-currentpositionX){
-        cubic.style.left = currentpositionX + a + "px";
+    let timermoveX = setInterval(function() {
+    if (a < posionmouseX-currentpositionX && a < flystep){
+        cubic.style.left = currentpositionX - a + "px";
         currentpositionX=cubic.offsetLeft
         a+=2
     } 
     },time)
 }
 function moveXback(b){
-    var timermovebX = setInterval(function() {
-     if (posionmouseX<=currentpositionX && b < currentpositionX-posionmouseX) {
-        cubic.style.left = currentpositionX - b + "px";  
+    let timermovebX = setInterval(function() {
+     if (b < currentpositionX-posionmouseX && b < flystep) {
+        cubic.style.left = currentpositionX + b + "px";  
         currentpositionX=cubic.offsetLeft
         b+=2
     }
@@ -34,26 +35,26 @@ function moveXback(b){
 }
 // move Y
 function moveY(a){
-    var timermoveY = setInterval(function() {
-    if (posionmouseY>=currentpositionY && a < posionmouseY-currentpositionY){
-        cubic.style.top = currentpositionY + a + "px";
+    let timermoveY = setInterval(function() {
+    if (a < posionmouseY-currentpositionY && a < flystep){
+        cubic.style.top = currentpositionY - a + "px";
         currentpositionY=cubic.offsetTop
         a+=2
     } 
     },time)
 }
 function moveYback(b){
-    var timermovebY = setInterval(function() {
-     if (posionmouseY<=currentpositionY && b < currentpositionY-posionmouseY) {
-        cubic.style.top = currentpositionY - b + "px";  
+    let timermovebY = setInterval(function() {
+     if (b < currentpositionY-posionmouseY && b < flystep) {
+        cubic.style.top = currentpositionY + b + "px";  
         currentpositionY=cubic.offsetTop
         b+=2
     }
     },time)
 }
 
-var collective=document.getElementById("collective")
-var X_fly, Y_fly, X_collective, Y_collective
+let collective=document.getElementById("collective")
+let X_fly, Y_fly, X_collective, Y_collective
 
 window.onload=function(){
     collective.style.left = Math.random()*window.innerWidth +"px"
@@ -65,8 +66,8 @@ window.onload=function(){
     Y_collective = collective.offsetTop 
 }
 
-var counter = 0
-var timercol = setInterval(function() {
+let counter = 0
+let timercol = setInterval(function() {
     X_fly = cubic.offsetLeft;
     Y_fly = cubic.offsetTop;
     X_collective = collective.offsetLeft 
@@ -84,46 +85,41 @@ var timercol = setInterval(function() {
 document.onmousedown = function(event) {
     posionmouseX=event.clientX
     posionmouseY=event.clientY
-    var a=0,b=0,c=0,d=0
-    var quadrant;
+    let a=0,b=0,c=0,d=0
+    let quadrant;
     currentpositionX=cubic.offsetLeft
     currentpositionY=cubic.offsetTop
-    distX = posionmouseX-currentpositionX
-    distY = posionmouseY-currentpositionY
+    distX = posionmouseX-currentpositionX - 25
+    distY = posionmouseY-currentpositionY - 25
     alpha = Math.atan(Math.abs(distY/distX)) * 57.3
-   // postext.innerHTML = currentpositionX + "  " +currentpositionY
 
-
-    if (distX>0) {
-        if (distY>0) {
+    if (Math.pow(distX,2) + Math.pow(distY,2) < 2000 ) {
+        msg.innerHTML = Math.pow(distX,2) + Math.pow(distY,2)
+       // msg.innerHTML = distX
+        if (distX>0 && distY>0) {
             quadrant=4
             moveX(a)
             moveY(c)
-            fly.style.transform = `rotate(${90+alpha}deg)`;
-        } else {
+            fly.style.transform = `rotate(${270+alpha}deg)`;
+        } else if (distX>0 && distY<0) {
             quadrant=1
             moveX(a)
             moveYback(d)
-            fly.style.transform = `rotate(${90-alpha}deg)`;
-        }
-    } else {
-        if (distY>0) {
+            fly.style.transform = `rotate(${270-alpha}deg)`;
+        } else if (distX<0 && distY>0) {
             quadrant=3
             moveXback(b)
             moveY(c)
-            fly.style.transform = `rotate(${270-alpha}deg)`;
-
-        } else {
-            quadrant=2
-            moveXback(b)
-            moveYback(d)
-            fly.style.transform = `rotate(${270+alpha}deg)`;
+            fly.style.transform = `rotate(${90-alpha}deg)`;
+        } else if (distX<0 && distY<0) {
+            quadrant=2;
+            moveXback(b);
+            moveYback(d);
+            fly.style.transform = `rotate(${90+alpha}deg)`;
         }
     }
-    
     clearInterval(timermovebX)
     clearInterval(timermoveX)
     clearInterval(timermovebY)
     clearInterval(timermoveY)
-    
-}
+} 
