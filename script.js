@@ -5,6 +5,9 @@ let msg=document.getElementById("msg")
 let screenwidth = window.innerWidth;
 let screenheight = window.innerHeight;
 
+
+cubic.style.left = screenwidth/2 + "px";
+cubic.style.top = screenheight/2 + "px";
 cubic.style.left = screenwidth/2 + "px";
 cubic.style.top = screenheight/2 + "px";
 
@@ -75,6 +78,8 @@ let timercol = setInterval(function() {
     X_collective = collective.offsetLeft 
     Y_collective = collective.offsetTop 
     if (Math.abs(X_fly-X_collective)<50 && Math.abs(Y_fly-Y_collective)<50) {
+       collective.style.left = Math.random()*screenwidth +"px"
+       collective.style.top = Math.random()*screenheight +"px"
        collective.style.left = Math.random()*screenwidth +"px"
        collective.style.top = Math.random()*screenheight +"px"
        counter+=1
