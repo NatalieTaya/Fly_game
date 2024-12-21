@@ -2,13 +2,15 @@ let fly=document.getElementById("fly");
 let cubic=document.getElementById("cube");
 let postext=document.getElementById("counter")
 let msg=document.getElementById("msg")
+let screenwidth = window.innerWidth;
+let screenheight = window.innerHeight;
 
-cubic.style.left = 300 + "px";
-cubic.style.top = 300 + "px";
+cubic.style.left = screenwidth/2 + "px";
+cubic.style.top = screenheight/2 + "px";
 
-let time =100
+let time = 5
 let posionmouseX,posionmouseY
-let flystep=20
+let flystep=5
 let currentpositionX
 let currentpositionY
 let alpha
@@ -57,8 +59,8 @@ let collective=document.getElementById("collective")
 let X_fly, Y_fly, X_collective, Y_collective
 
 window.onload=function(){
-    collective.style.left = Math.random()*window.innerWidth +"px"
-    collective.style.top = Math.random()*window.innerHeight +"px"
+    collective.style.left = Math.random()*screenwidth +"px"
+    collective.style.top = Math.random()*screenheight +"px"
 
     X_fly = cubic.offsetLeft;
     Y_fly = cubic.offsetTop;
@@ -73,8 +75,8 @@ let timercol = setInterval(function() {
     X_collective = collective.offsetLeft 
     Y_collective = collective.offsetTop 
     if (Math.abs(X_fly-X_collective)<50 && Math.abs(Y_fly-Y_collective)<50) {
-       collective.style.left = Math.random()*window.innerWidth +"px"
-       collective.style.top = Math.random()*window.innerHeight +"px"
+       collective.style.left = Math.random()*screenwidth +"px"
+       collective.style.top = Math.random()*screenheight +"px"
        counter+=1
        postext.innerHTML = "Eaten: " + counter
    }
@@ -82,7 +84,7 @@ let timercol = setInterval(function() {
 
 
 
-document.onmousedown = function(event) {
+document.onmousemove = function(event) {
     posionmouseX=event.clientX
     posionmouseY=event.clientY
     let a=0,b=0,c=0,d=0
@@ -94,24 +96,22 @@ document.onmousedown = function(event) {
     alpha = Math.atan(Math.abs(distY/distX)) * 57.3
 
     if (Math.pow(distX,2) + Math.pow(distY,2) < 2000 ) {
-        msg.innerHTML = Math.pow(distX,2) + Math.pow(distY,2)
-       // msg.innerHTML = distX
-        if (distX>0 && distY>0) {
+        if (distX>0 && distY>0 && currentpositionX>20 && currentpositionY>20 ) {
             quadrant=4
             moveX(a)
             moveY(c)
             fly.style.transform = `rotate(${270+alpha}deg)`;
-        } else if (distX>0 && distY<0) {
+        } else if (distX>0 && distY<0 && currentpositionX>20 && currentpositionY<screenheight-20 ) {
             quadrant=1
             moveX(a)
             moveYback(d)
             fly.style.transform = `rotate(${270-alpha}deg)`;
-        } else if (distX<0 && distY>0) {
+        } else if (distX<0 && distY>0 && currentpositionX<screenwidth-20 && currentpositionY>20 ) {
             quadrant=3
             moveXback(b)
             moveY(c)
             fly.style.transform = `rotate(${90-alpha}deg)`;
-        } else if (distX<0 && distY<0) {
+        } else if (distX<0 && distY<0 && currentpositionX<screenwidth-20 && currentpositionY<screenheight-20 ) {
             quadrant=2;
             moveXback(b);
             moveYback(d);
