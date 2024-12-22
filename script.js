@@ -4,7 +4,7 @@ let postext=document.getElementById("counter")
 let msg=document.getElementById("msg")
 let screenwidth = window.innerWidth;
 let screenheight = window.innerHeight;
-
+let flyy = new Fly()
 cubic.style.left = screenwidth/2 + "px";
 cubic.style.top = screenheight/2 + "px";
 
@@ -13,41 +13,7 @@ let posionmouseX,posionmouseY
 let flystep = 5
 let currentpositionX
 let currentpositionY
-let alpha
 let distX, distY;
-
-// move X
-function moveX(a){
-    let timermoveX = setInterval(function() {
-    if (a < posionmouseX-currentpositionX && a < flystep){
-        cubic.style.left = currentpositionX - a + "px";
-        currentpositionX=cubic.offsetLeft
-        a+=2
-    } 
-    else if (a <= currentpositionX-posionmouseX && a < flystep){
-        cubic.style.left = currentpositionX + a + "px";  
-        currentpositionX=cubic.offsetLeft
-        a+=2
-    }
-    },time)
-}
-
-// move Y
-function moveY(a){
-    let timermoveY = setInterval(function() {
-    if (a < posionmouseY-currentpositionY && a < flystep){
-        cubic.style.top = currentpositionY - a + "px";
-        currentpositionY=cubic.offsetTop
-        a+=2
-    } else if (a <= currentpositionY-posionmouseY && a < flystep){
-        cubic.style.top = currentpositionY + a + "px";  
-        currentpositionY=cubic.offsetTop
-        a+=2
-    }
-
-    },time)
-}
-
 
 let collective=document.getElementById("collective")
 let X_fly, Y_fly, X_collective, Y_collective
@@ -73,8 +39,8 @@ let timercol = setInterval(function() {
        collective.style.top = Math.random()*screenheight +"px"
        counter+=1
        postext.innerHTML = "Eaten: " + counter
-   }
-   },500)
+    }
+},500)
 
 
 document.onmousemove = function(event) {
@@ -82,19 +48,18 @@ document.onmousemove = function(event) {
     posionmouseY=event.clientY
     let a=0,c=0
     currentpositionX=cubic.offsetLeft
-    currentpositionY=cubic.offsetTop
+    currentpositionY=cubic.offsetTop  
     distX = posionmouseX-currentpositionX - 25
     distY = posionmouseY-currentpositionY - 25
-    alpha = Math.atan(Math.abs(distY/distX)) * 57.3
 
     let vect = new Vector(-distX,distY);
+    
     msg.innerHTML = currentpositionX;
 
-    if (Math.pow(distX,2)+Math.pow(distY,2)<2000  && 
-            currentpositionX>=20 && currentpositionY>=20 && 
-            currentpositionX<=screenwidth-50 && currentpositionY<=screenheight-50 ) {
-        moveX(a)
-        moveY(c)
+    if (Math.pow(distX,2)+Math.pow(distY,2)<2000 ) {
+        flyy.movex(a)
+        flyy.movey(c)
+        //moveY(c)
         fly.style.transform = `rotate(${vect.angle()}deg)`;
     }
 
