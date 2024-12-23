@@ -42,24 +42,18 @@ let timercol = setInterval(function() {
     }
 },500)
 
-
 document.onmousemove = function(event) {
     posionmouseX=event.clientX
     posionmouseY=event.clientY
-    let a=0,c=0
     currentpositionX=cubic.offsetLeft
     currentpositionY=cubic.offsetTop  
     distX = posionmouseX-currentpositionX - 25
     distY = posionmouseY-currentpositionY - 25
 
     let vect = new Vector(-distX,distY);
-    
-    msg.innerHTML = currentpositionX;
-
+//    msg.innerHTML = distX + " " + distY;
     if (Math.pow(distX,2)+Math.pow(distY,2)<2000 ) {
-        flyy.movex(a)
-        flyy.movey(c)
-        //moveY(c)
+        flyy.move()
         fly.style.transform = `rotate(${vect.angle()}deg)`;
     }
 
