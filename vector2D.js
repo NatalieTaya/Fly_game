@@ -18,7 +18,7 @@ class Vector {
     }
 
     angle () {
-        return -Math.atan2(this.y,this.x)*57.3 + 90
+        return -Math.atan2(this.y,this.x)*57.3 + 270
     }
 
     length () {

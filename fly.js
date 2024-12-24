@@ -17,14 +17,19 @@ class Fly {
         this.y=y
     }
 
-    move() {
+    movetosnack() {
+        //let cubic=document.getElementById("cube");
+        cubic.style.left = X_fly + distX/10 + "px";
+        cubic.style.top = Y_fly + distY/10 + "px";
+        }
+    
+    moveaway() {
         let cubic=document.getElementById("cube");
-        let i = 0
-        for (i = 0; i < 3; i+=1) {
+        for (let i = 0; i < 3; i+=1) {
             setTimeout(() =>   { 
-                cubic.style.left = currentpositionX - distX/10 + "px";
-                cubic.style.top = currentpositionY - distY/10 + "px";
-            }, 300)
+                cubic.style.left = X_fly  - distX/5 + "px";
+                cubic.style.top = Y_fly - distY/5 + "px";
+            }, 100)
         }
     }
 }
